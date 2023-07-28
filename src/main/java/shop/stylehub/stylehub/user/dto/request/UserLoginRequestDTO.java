@@ -1,4 +1,4 @@
-package shop.stylehub.stylehub.user.dto;
+package shop.stylehub.stylehub.user.dto.request;
 
 
 import lombok.*;
@@ -6,12 +6,13 @@ import lombok.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+@Setter
 @Getter
-@Builder
-@EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "userEmail")
+@Builder
 public class UserLoginRequestDTO {
 
     @NotBlank

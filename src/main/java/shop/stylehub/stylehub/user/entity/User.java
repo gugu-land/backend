@@ -1,9 +1,9 @@
 package shop.stylehub.stylehub.user.entity;
 
+import com.github.f4b6a3.uuid.UuidCreator;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,14 +13,13 @@ import java.util.UUID;
 @Getter
 @ToString
 @EqualsAndHashCode(of = "userId")
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "tbl_user")
 public class User {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "userId", columnDefinition = "BINARY(16)")
     private UUID userId;
 
@@ -34,7 +33,7 @@ public class User {
     private String userName;
 
     @Column(name = "user_nickname", unique = true, nullable = false, length = 20)
-    private String userNickname;
+    private String userNickName;
 
     @CreationTimestamp
     @Column(name = "user_regdate", nullable = false)
@@ -47,4 +46,21 @@ public class User {
 
     @Column(name = "user_profile", length = 800)
     private String userProfile;
+
+    @PrePersist
+    public void createUserId(){
+        // sequential uuid 생성
+//        UUID uuid = Generators.timeBasedGenerator().generate();
+//        String[] uuidArr = uuid.toString().split("-");
+//        String uuidStr =
+//                uuidArr[2]+uuidArr[1]+uuidArr[0]+uuidArr[3]+uuidArr[4];
+//        StringBuffer stringBuffer = new StringBuffer(uuidStr);
+//        stringBuffer.insert(8, "-");
+//        stringBuffer.insert(13, "-");
+//        stringBuffer.insert(18, "-");
+//        stringBuffer.insert(23, "-");
+//        uuid = UUID.fromString(stringBuffer.toString());
+//        this.userId = uuid;
+        this.userId = UuidCreator.getTimeOrdered();
+    }
 }
